@@ -14,7 +14,7 @@ import java.util.Objects;
 
 public class DataScraping {
 
-    public void scraping() {
+    public List<Product> scraping() {
         String driverPath = Objects.requireNonNull(DataScraping.class.getClassLoader().getResource("chromedriver.exe")).getPath();
         System.setProperty("webdriver.chrome.driver", driverPath);
 
@@ -60,9 +60,17 @@ public class DataScraping {
             }
         }
 
+        //List products
         for (Product p : products) {
             System.out.println(p.toString());
         }
+
+        waitForIt(3000);
+
+        //Close browser after the end of automation code
+        driver.quit();
+
+        return products;
 
     }
 
