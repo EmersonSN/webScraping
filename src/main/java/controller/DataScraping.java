@@ -1,6 +1,8 @@
 package controller;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
@@ -27,6 +29,11 @@ public class DataScraping {
 
         WebDriver driver = new ChromeDriver(options);
         driver.get("https://amazon.com.br");
+
+        //Find a searchbar and type what you want for then click enter
+        WebElement inputData = driver.findElement(By.xpath("//input[@id=\"twotabsearchtextbox\"]"));
+        inputData.sendKeys("smartphone");
+        inputData.submit();
 
     }
 }
