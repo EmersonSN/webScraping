@@ -7,6 +7,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 
 public class DataScraping {
@@ -36,7 +37,17 @@ public class DataScraping {
         inputData.sendKeys("smartphone");
         inputData.submit();
 
+        //Wait 4 seconds before continue
         waitForIt(4000);
+
+        //Scraping data from website
+        List<WebElement> productDescriptions = driver.findElements(By.xpath("//h2[@class=\"a-size-base-plus a-spacing-none a-color-base a-text-normal\"]/span"));
+        List<WebElement> productValues = driver.findElements(By.xpath("//span[@class=\"a-price\"]"));
+
+        for (int i = 0; i < productValues.size(); i++) {
+            System.out.println(productValues.get(i).getText());
+            System.out.println(productDescriptions.get(i).getText());
+        }
 
     }
 
