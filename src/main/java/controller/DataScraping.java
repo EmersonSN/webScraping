@@ -4,6 +4,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
+import java.util.Collections;
+
 public class DataScraping {
 
     public void scraping() {
@@ -11,6 +13,17 @@ public class DataScraping {
         System.setProperty("webdriver.chrome.driver", driverPath);
 
         ChromeOptions options = new ChromeOptions();
+        //Add arguments for not errors in execution time
+        options.addArguments("--no-sandbox");
+        options.addArguments("--disable-dev-shm-usage");
+
+        //Add arguments for don't be seen as a bot by websites
+        options.addArguments("--disable-blink-features=AutomationControlled");
+        options.setExperimentalOption("excludeSwitches", Collections.singletonList("enable-automation"));
+        options.addArguments("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36");
+
+        //Add argument for window size
+        options.addArguments("window-size=1200,800");
 
         WebDriver driver = new ChromeDriver(options);
         driver.get("https://amazon.com.br");
