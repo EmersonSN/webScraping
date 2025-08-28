@@ -7,11 +7,12 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
 import java.util.Collections;
+import java.util.Objects;
 
 public class DataScraping {
 
     public void scraping() {
-        String driverPath = DataScraping.class.getClassLoader().getResource("chromedriver.exe").getPath();
+        String driverPath = Objects.requireNonNull(DataScraping.class.getClassLoader().getResource("chromedriver.exe")).getPath();
         System.setProperty("webdriver.chrome.driver", driverPath);
 
         ChromeOptions options = new ChromeOptions();
@@ -35,5 +36,15 @@ public class DataScraping {
         inputData.sendKeys("smartphone");
         inputData.submit();
 
+        waitForIt(4000);
+
+    }
+
+    public void waitForIt(long millisecondsTime) {
+        try {
+            new Thread().sleep(millisecondsTime);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }
