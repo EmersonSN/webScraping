@@ -1,11 +1,13 @@
 package controller;
 
+import model.entities.Product;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -44,9 +46,22 @@ public class DataScraping {
         List<WebElement> productDescriptions = driver.findElements(By.xpath("//h2[@class=\"a-size-base-plus a-spacing-none a-color-base a-text-normal\"]/span"));
         List<WebElement> productValues = driver.findElements(By.xpath("//span[@class=\"a-price\"]"));
 
+        List<Product> products = new ArrayList<>();
         for (int i = 0; i < productValues.size(); i++) {
-            System.out.println(productValues.get(i).getText());
-            System.out.println(productDescriptions.get(i).getText());
+            //Data validation for empty or blank fields in the search
+            String description = i < productDescriptions.size() ? productDescriptions.get(i).getText().trim() : "";
+            String priceText = productValues.get(i).getText().trim();
+
+            //Only saves the products with correct data
+            if (!description.isEmpty() && !priceText.isEmpty() && !priceText.equalsIgnoreCase("R$ 0,00")) {
+                products.add(new Product(description, priceText));
+            } else {
+                System.out.println("Product ignored: Invalid description or price.");
+            }
+        }
+
+        for (Product p : products) {
+            System.out.println(p.toString());
         }
 
     }
