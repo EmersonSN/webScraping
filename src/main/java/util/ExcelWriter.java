@@ -1,10 +1,7 @@
 package util;
 
 import model.entities.Product;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.FileOutputStream;
@@ -19,10 +16,19 @@ public class ExcelWriter {
         //Create a sheet
         Sheet sheet = workFolder.createSheet("Products");
 
+        //Bold style font
+        Font boldFont = workFolder.createFont();
+        boldFont.setBold(true);
+
+        //Set cells into bold
+        CellStyle boldStyle = workFolder.createCellStyle();
+        boldStyle.setFont(boldFont);
+
         //Create columns for description and value
         Row line = sheet.createRow(0);
         Cell cell = line.createCell(0);
         cell.setCellValue("Description");
+        cell.setCellStyle(boldStyle);
 
         Cell cell1 = line.createCell(1);
         cell1.setCellValue("Value");
